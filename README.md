@@ -18,7 +18,7 @@ A simple, fast and powerful blog theme built by Astro.
 > 1. UnoCSS adaption (serious)
 > 2. Cannot pack sitemap and pagefind resources on Vercel ([need upstream fix](https://github.com/withastro/astro/issues/12663) & temp fixed)
 > 3. Header & customize options is still under development (template exposed still)
-
+          
 ## Introduction
 
 Checkout [Demo Site →](https://astro-pure.js.org/)
