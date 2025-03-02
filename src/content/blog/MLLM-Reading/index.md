@@ -1,7 +1,7 @@
 ---
-title: Paper-Reading 多模态大模型（视觉语言模型）
+title: Foundation Paper Reading--Multi Modal
 publishDate: 2025-03-02
-description: 'Multi-Modal 领域工作的快速概览'
+description: '多模态领域基石级别工作的快速一瞥'
 tags:
   - Multi-Modal
 heroImage: { src: 'star moon night.jpg', color: '#64574D' }
