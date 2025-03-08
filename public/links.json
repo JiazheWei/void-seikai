@@ -5,16 +5,16 @@
       "desc": "Common links included in circle friends",
       "link_list": [
         {
-          "name": "Arthals' ink",
-          "intro": "所见高山远木，阔云流风；所幸岁月盈余，了无拘束",
-          "link": "https://arthals.ink/",
-          "avatar": "https://cdn.arthals.ink/Arthals.png"
+          "name": "kiyotakali's link",
+          "intro": "李处",
+          "link": "https://www.kiyotakali.top/",
+          "avatar": "https://avatars.githubusercontent.com/u/112888202?s=400&u=9f72a38463c0dc56f264d5d12a823c17bb14628d&v=4"
         },
         {
-          "name": "CWorld Site",
-          "intro": "求知若愚，虚怀若谷",
-          "link": "https://cworld0.com/",
-          "avatar": "https://cravatar.cn/avatar/1ffe42aa45a6b1444a786b1f32dfa8aa?s=200"
+          "name": "Number-L",
+          "intro": "计试罗神",
+          "link": "https://number-l.github.io/",
+          "avatar": "https://avatars.githubusercontent.com/u/112866466?v=4"
         }
       ]
     },
@@ -28,16 +28,10 @@
       "desc": "Other special links",
       "link_list": [
         {
-          "name": "虫洞",
-          "intro": "随机前往十年之约的成员博客",
-          "link": "https://www.foreverblog.cn/go.html",
-          "avatar": "/images/wormhole.png"
-        },
-        {
-          "name": "开往",
-          "intro": "随机前往开往的成员博客",
-          "link": "https://www.travellings.cn/go.html",
-          "avatar": "https://www.travellings.cn/assets/travelling.png"
+          "name": "XJTU-DL Seminar",
+          "intro": "西安交大深度学习讨论班，有意加入可随时联系李处",
+          "link": "https://xjtu-deeplearning-seminar.github.io/dl-discussion/",
+          "avatar": "https://avatars.githubusercontent.com/u/168283007?s=400&v=4"
         }
       ]
     }
