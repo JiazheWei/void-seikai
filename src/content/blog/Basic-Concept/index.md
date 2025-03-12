@@ -9,15 +9,15 @@ heroImage: { src: 'molisa.jpg', color: '#64574D' }
 language: 'Chinese'
 ---
 
-# AGI
+## AGI
 
 AGI，全名为Artificial General Intelligence, 中文名通用人工智能，为人工智能的最高级形态，学习过程无需人类干预，可以处理任何跨领域任务，具有深层推理与抽象逻辑能力，同时还具有自我改进能力。
 
 与当前的人工智能（弱人工智能）相对，是人工智能的终极目标。
 
-# Transformer结构详解
+## Transformer结构详解
 
-## 整体结构
+### 整体结构
 正式开始之前不妨先观察transformer是如何完成一个翻译任务的。
 
 如图：
@@ -35,7 +35,7 @@ transformer由一组编码器结构与一组解码器结构组成，输入是一
 
 ![alt text](decoder.png)
 
-## 细节
+### 细节
 先谈如何得到单词的embedding.方法有很多，先前的word2vec, glove算法等都可以用。
 
 而要采用时间步嵌入的原因，是transformer没用RNN结构，导致顺序信息不能显式利用，而这部分信息对于NLP任务是非常重要的。因此直接在embedding中加入这部分信息。方法也有很多，可以通过learnable的函数学，也可以直接按照公式嵌入。原方法使用了后者，采用余弦嵌入。
@@ -63,4 +63,5 @@ $$attention(Q,K,V)=softmax(\frac{QK^{T}}{\sqrt{d_{k}}})V$$
 
 而多头注意力机制则是对一个特征图$x$进行多次self-attention运算（假如说n次），最终就得到了n个输出$z_{x}$.我们选择将n个$z_{x}$concat，再通过线性层改变形状即可得到多头注意力机制的输出$z_{final}$,形状与输入的特征矩阵是一样的。
 
+## VIT
 
