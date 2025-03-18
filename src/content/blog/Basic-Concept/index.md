@@ -65,3 +65,94 @@ $$attention(Q,K,V)=softmax(\frac{QK^{T}}{\sqrt{d_{k}}})V$$
 
 ## VIT
 
+
+## 
+
+
+## torch面经
+1）cat()和stack()的区别是什么？
+
+cat将张量在原有的维度上拼接，stack在新的维度上对接。
+例如两个[2 x 3]的张量，使用cat会得到一个[4 x 3]的张量，使用stack会得到一个[2 x 4 x 3]的张量。
+
+2）神经网络的梯度下降能优化非凸函数吗？
+
+可以，虽然对于非凸问题局部最小不一定为全局最小，但现代神经网络通过引入优化器特化每个参数更新的学习率来确保模型确实在往损失下降的方向走。
+
+以adam优化器为例，adam为每个参数维护一个EMA（指数移动平均值），根据梯度的一阶矩和二阶矩来更新每个参数变化的步长：
+$$m_t=\beta_{1} \cdot m_{t-1}+(1-\beta_{1} \cdot)g_{t}$$
+
+$$v_{t}=\beta_{2} \cdot v_{t-1} + (1-\beta_{2})\cdot g_{t}^2$$
+
+参数更新:
+$$\theta_{t}=\theta_{t-1}-\eta \cdot \frac{m_t}{\sqrt{v_t}+\epsilon}$$
+
+其中$\epsilon$是为了防止分母为0的小数。
+
+3）定义一个神经网络模块的大致方式：
+
+- 定义一个类，使其继承torch中nn的模块作为神经网络的模块。
+- 使用_init_()初始化好有哪些层（卷积，池化，循环）......
+- 定义前向传播过程。
+- 输出结果。
+
+参考代码：
+```
+import torch
+import torch.nn as nn
+ 
+class SimpleNN(nn.Module):
+    def __init__(self):
+        super(SimpleNN, self).__init__()
+        self.fc1 = nn.Linear(10, 20)  # 输入维度为 10，输出维度为 20 的全连接层
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(20, 2)  # 输入维度为 20，输出维度为 2 的全连接层
+ 
+    def forward(self, x):
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.fc2(x)
+        return x
+ 
+# 测试模型
+model = SimpleNN()
+input_data = torch.randn(32, 10)  # 32 个样本，每个样本有 10 个特征
+output = model(input_data)
+print(output.shape)
+```
+4）pytorch是如何计算函数梯度的？
+使用计算图，大致的torch计算梯度流程是：
+
+- 定义需要计算梯度的函数。
+- 将require_grad( )设置为true。
+- 调用backward( )计算梯度。
+
+5）pytorch如何自定义损失函数并进行训练？
+接上文通过forward() 前向传播得到模型输出，在forward()中再自定义好损失函数接受输出并计算损失，由forward()返回损失，再调用backward()即可反向传播。
+
+梳理一下，整体流程是：
+- 优化器梯度清零。
+- 前向传播得到输出。
+- 通过损失函数计算损失。
+- 损失函数反向传播。
+- 优化器动态调整学习率。
+
+6）简单讲一下hook：
+
+hook是torch中一种无需改动其他代码，即可在forward或者backward过程中返回梯度热力图或者参数情况的机制。
+
+7）梯度爆炸或消失有哪些可能？
+
+先看梯度消失。
+
+- 激活函数选择不当，梯度开出来为0。
+- 网络过深，如果每层梯度小于1，那么累乘之后数字非常小。
+- 初始化权重值过小。
+- 每一层之后没有归一化操作。
+
+再看梯度爆炸：
+
+- 网络层过深且无归一化也有梯度爆炸的可能。
+- 学习率过高，加大梯度更新震荡幅度。
+- 损失函数设计不当。
+
