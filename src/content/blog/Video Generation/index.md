@@ -37,10 +37,11 @@ language: 'Chinese'
 
 ### Fréchet Video Distance (FVD)
 基于FID思想，使用在Kinetics上预训练好的I3D模型提取视频的时空特征，并计算FVD：
-$$\begin{align*}
+$$
 \mathbf{FVD} = \|\mu_g - \mu_r\|^2 + \mathrm{Tr}(\Sigma_g + \Sigma_r - 2(\Sigma_g\Sigma_r)^{1/2})
-\end{align*}$$
+$$
 
 ### Video Inception Score(Video IS)
+
 基于2D图像计算IS的思想，使用3D ConvNet(C3D)提取视频特征，计算条件分布$p(y|x)$与$p(y)$。
 
