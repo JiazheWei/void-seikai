@@ -36,3 +36,31 @@ $$p_{\text{RAG-Token}}(y|x) \approx \prod_{i}^{N} \sum_{z \in \text{top-k}(p(\cd
 
 ## Agent
 
+## BERT
+### Challenge
+
+NLP任务中很多时候单向注意力并不够用。GPT所使用的decoder-only结构适合应付文本生成任务，而对文本答案不定，前后文关系紧密的任务则不适用。例如，在多轮问答中，问题答案很可能出现在后面的句子：
+
+```
+A: How do you go to school today?
+
+B: By bike. 
+```
+
+我们可以看到如果要回答如何来上学这个问题，需要结合下文的内容。但是单纯让模型做双向注意力会导致模型在预测一个token的时候“看得见自己”，给出的回复过于trival。
+
+### Method
+
+BERT解决问题的思路是：只用transformer的encoder完成双向注意力机制。先看BERT的输入层：
+
+![text](BERT.png)
+
+BERT的token embedding实际上是一个有着30552个单词的look-up表，限定每个单词的特征维度为728维。Segment Embedding 表示句子类型，例如在问答中，问句是句子A，下一句答复是句子B，则两个句子的segment 部分的值分别为全1与全0，用以区分问句和答句。对于非问答类的比如分类任务的句子，所有句子类型相同，segment 全0即可。
+
+和transformer的余弦position embedding不同，BERT用了一个可以学的位置嵌入。同样是一个look-up表，BERT限定能同时处理的token上限是512，因此这张表的尺寸也是$512 \times 768$，每$i$行的每一个值表示该第$i$个token的位置编码。
+
+结束输入来看架构。BERT主体架构很简单，就是transformer的几个encoder叠在一起。BERT性能sota的秘诀在于pre-train。在预训练阶段，采用了一种类似于完形填空的手段：随机选15%的词出来，其中80%的词挖掉置[Mask], 10%的词随机换成其他的词，剩下10%不变。这种MLM训练任务让BERT有非常好的上下文理解能力。之后还有NSP训练任务，只是后来的研究发现NSP对提升语言模型理解能力并没有太大帮助，因此不多说。
+
+### Key
+- BERT是一种双端注意力机制语言理解模型，关键在于理解，因此BERT用来生成用于做分类或者其他任务的文本表示，本身不生成文本，也没有decoder。
+- MLM Benchmark是一项宝贵的训练手段，成功流传下来。
