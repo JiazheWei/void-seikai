@@ -4,7 +4,7 @@ publishDate: 2025-04-06
 description: ''
 tags:
   - Life
-heroImage: { src: 'thundermail.webp', color: '#64574D' }
+heroImage: { src: 'thundermail.jpg', color: '#64574D' }
 language: 'Chinese'
 ---
 
