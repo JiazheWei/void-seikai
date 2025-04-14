@@ -3,7 +3,8 @@ title: A diary during the period chasing for Mirai
 publishDate: 2025-03-07
 description: '瀚海中的每一滴水，都有属于自己的汹涌与浪花。'
 tags:
-  - I think, therefore I am.
+  - I think.
+  - life
 heroImage: { src: 'dream.jpg', color: '#64574D' }
 language: 'Mirai'
 ---
