@@ -14,6 +14,7 @@ language: 'Chinese'
 
 
 [zhihu](https://zhuanlan.zhihu.com/p/675317460).
+
 [arxiv](https://arxiv.org/abs/2212.06817).
 
 # RT-2
@@ -28,4 +29,8 @@ VQA format “Q: what action should the robot take to [task instruction]? A:....
 
 RT-2也有几个显著的缺点。第一点，RT-2只能通过预训练学到更加丰富的语义信息，了解具体场景并知道该做什么，但是无法学到新的动作。RT-2的动作能力受限于训练数据中已有的技能分布。例如，如果训练数据中只包含“抓取”和“移动”两种动作，RT-2无法凭空学会“旋转”或“跳跃”。这一点未来可以通过丰富数据集中的动作种类来解决；第二点，RT-2采用了VLA，视觉语言模型参数量非常庞大，面对需要高频推理的机器人控制（一秒内可能需要上百次决策）无法做到实时推理，并且成本高昂，这个问题未来可通过模型蒸馏与量化来解决。
 
+[arxiv](https://arxiv.org/abs/2307.15818)
 
+[zhihu](https://zhuanlan.zhihu.com/p/668907606)
+
+# Palm-E
