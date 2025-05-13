@@ -9,7 +9,7 @@ language: 'Chinese'
 ---
 
 ## RT-1
-### insight
+insight
 提出了robotics transformer,机器人控制通过语言指令和视觉图像，那么现在尝试将语言指令和视觉图像压缩成密集的token，作为序列送入transformer中，并令其对指令/视觉信息序列和动作序列应用交叉注意力机制捕捉二者之间的联系，这样就可以令transformer学习如何根据指令与图像推出对应的动作序列，接着应用在下游机器人动作上。
 
 
@@ -18,7 +18,7 @@ language: 'Chinese'
 [arxiv](https://arxiv.org/abs/2212.06817).
 
 ## RT-2
-### insight
+insight
 RT-1的问题是：机器人数据非常少，利用transformer专门特定学习指令-视觉与动作序列对的关系需要人工标注海量数据，成本高昂不现实。可以考虑利用已经在互联网级别数据上预训练好的VLM来完成机器人动作的控制任务。
 
 最大的问题是将VLM的输出和机器人动作序列匹配。采用的策略是使用自然语言精确描述机器人将要采取的动作，要做到这一步只需要将机器人数据构造成VQA格式即可，例如：
@@ -34,7 +34,7 @@ RT-2也有几个显著的缺点。第一点，RT-2只能通过预训练学到更
 [zhihu](https://zhuanlan.zhihu.com/p/668907606)
 
 ## Palm-E
-### insight
+insight
 正式将多模态大模型的概念引入了具身智能中。与RT系列对比，并不再只是将观测序列和状态序列作为简单的序列送入transformer中做交叉注意力，而是采用各类编码器将各种模态的信息与LLM的特征空间对齐。
 
 ![alt text](palme.png)
