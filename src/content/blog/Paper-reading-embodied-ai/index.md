@@ -50,3 +50,19 @@ insight
 
 但是论文中间的讲述比较有意思，现有的多模态框架更像是将LLM作为一个盲人，各类affordance model作为眼睛提供给LLM信息，并没有太多视觉--语言之间的推理。虽然文章解决这一问题的方法也很粗暴，直接调了gpt-4v。后面作为现实场景的即时反馈的方法是拍照，将视觉信息再传回VLM进行决策。
 
+## RoboFlamingo
+把VLM做决策的部分（输出机器人具体动作）和进行观测的部分做了解耦，这样因为被拆开了，两方面都可以做各自的特化并进行scale。
+
+![alt](RoboFlamingo.png)
+
+具体来说中间VIT的采样器，交叉注意力层的参数和决策头用的模型参数是可以调整的，而其他地方使用Flamingo的先验知识。整体框架经过两步：第一步预训练，第二步使用模仿学习方法让agent学习专家动作。策略是最大化专家动作的似然：
+$$\ell = \mathbb{E}_{(\tau, l)_i \sim D} \left[ \sum_{t=0}^{|\tau|} \log \pi_\theta (a_t | o_t, l) \right].$$
+
+论文中的训练函数分别用MSE计算爪子位置的损失，用BCE计算爪子的动作达到最大化似然。
+
+文章最大的insight在于第一次把自然语言指令下机器人长时间步动作执行的问题放到台面上，并采用决策头与观测解耦的方法，引入能够很好处理序列历史状态信息的模型来加强这方面的决策。
+
+[arxiv](https://arxiv.org/abs/2311.01378)
+[notion](https://www.notion.so/RoboFlamingo-1c2c4bccb03b806abfb6f187ce5b1cc7)
+
+## OpenVLA
