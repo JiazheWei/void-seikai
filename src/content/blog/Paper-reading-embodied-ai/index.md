@@ -63,6 +63,18 @@ $$\ell = \mathbb{E}_{(\tau, l)_i \sim D} \left[ \sum_{t=0}^{|\tau|} \log \pi_\th
 文章最大的insight在于第一次把自然语言指令下机器人长时间步动作执行的问题放到台面上，并采用决策头与观测解耦的方法，引入能够很好处理序列历史状态信息的模型来加强这方面的决策。
 
 [arxiv](https://arxiv.org/abs/2311.01378)
+
 [notion](https://www.notion.so/RoboFlamingo-1c2c4bccb03b806abfb6f187ce5b1cc7)
 
 ## OpenVLA
+
+与先前的工作相比没有新的东西，只是把高效微调VLM的一些方法（LoRA,夹层微调）以及分模块微调方面一些反直觉的内容（微调VLA模型最好不要冻结视觉编码器）点了出来。
+
+[notion](https://www.notion.so/OpenVLA-1c2c4bccb03b80f9a149c74ec505c410)
+
+## TinyVLA
+
+强调两个点：泛化能力与实时推理的能力。前者主要指面对新场景，不同的场景采光，没见过的语言指令和动作任务，后者指在实际应用场景进行推理。因为主流方法都用上了大型VLM，不可避免的导致推理速度很慢，而且开销大。之前一个也许可行的思路是将控制换成开环的，TinyVLA则是抛弃了传统的以离散化的token表示机器人动作的思路，在VLM后面接上一个DP头来生成连续动作。
+
+结果是推理的开销下降，速度提升，在实时推理方面进步很大。训练过程的策略是使用OpenVLA的那一套，用LoRA微调多模态模型，而对diffusion policy头走完整的训练流程。
+
