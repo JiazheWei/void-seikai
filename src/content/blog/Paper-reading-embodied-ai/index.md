@@ -88,3 +88,4 @@ $$\ell = \mathbb{E}_{(\tau, l)_i \sim D} \left[ \sum_{t=0}^{|\tau|} \log \pi_\th
 - 每个视频片段都有描述字幕，通过prompt命令Chatgpt辅助为每一段描述生成详细的思维链。
 - varying 参数微调。
 
+[arxiv](https://arxiv.org/abs/2305.15021)
