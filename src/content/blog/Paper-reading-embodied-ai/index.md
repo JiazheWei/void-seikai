@@ -89,3 +89,13 @@ $$\ell = \mathbb{E}_{(\tau, l)_i \sim D} \left[ \sum_{t=0}^{|\tau|} \log \pi_\th
 - varying 参数微调。
 
 [arxiv](https://arxiv.org/abs/2305.15021)
+
+## Unified Video Action Model
+
+![alt](unified_video.png)
+
+一致性video-action模型，考虑加入video作为生成action sequence 的一个参考模态。
+
+模型结构如上，分别将视频和动作序列通过全连接层映射为大小统一的token序列，然后送入transformer，将video-tokens与action tokens映射到统一的latent space。接着用diffusion head分别从latent space中的tokens生成观察与动作序列，用diffusion model的损失函数预测损失并更新前面连接层和transformer的参数。
+
+[arxiv](https://arxiv.org/abs/2503.00200)
