@@ -101,7 +101,7 @@ $$\ell = \mathbb{E}_{(\tau, l)_i \sim D} \left[ \sum_{t=0}^{|\tau|} \log \pi_\th
 [arxiv](https://arxiv.org/abs/2503.00200)
 
 
-## Learning Video Generation for Robotic Manipulation with Collaborative Trajectory Control
+## RoboMaster
 
 video是一种非常适合用来训VLA模型的模态，以往已经有了往video-generation中掺入轨道作为条件，生成Trajectory-conditioned video再喂给机械臂训练的范例。但是还有几个问题，由于这种video在生成的时候是按照一个一个物体，每个物体的运动轨迹生成的，表示为：
 
