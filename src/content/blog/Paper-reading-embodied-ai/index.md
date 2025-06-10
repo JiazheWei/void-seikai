@@ -99,3 +99,34 @@ $$\ell = \mathbb{E}_{(\tau, l)_i \sim D} \left[ \sum_{t=0}^{|\tau|} \log \pi_\th
 模型结构如上，分别将视频和动作序列通过全连接层映射为大小统一的token序列，然后送入transformer，将video-tokens与action tokens映射到统一的latent space。接着用diffusion head分别从latent space中的tokens生成观察与动作序列，用diffusion model的损失函数预测损失并更新前面连接层和transformer的参数。
 
 [arxiv](https://arxiv.org/abs/2503.00200)
+
+
+## Learning Video Generation for Robotic Manipulation with Collaborative Trajectory Control
+
+video是一种非常适合用来训VLA模型的模态，以往已经有了往video-generation中掺入轨道作为条件，生成Trajectory-conditioned video再喂给机械臂训练的范例。但是还有几个问题，由于这种video在生成的时候是按照一个一个物体，每个物体的运动轨迹生成的，表示为：
+
+$$f_\theta(\cdot): I \in \mathbb{R}^{3 \times H \times W}, c \in \mathcal{Y}_L, M_d, M_s \in \{0,1\}^{H \times W}, C \in \{(x,y)^t\}_{t=1}^F \to X \in \mathbb{R}^{F \times 3 \times H \times W}$$
+
+
+在生成的时候也是一个一个物体往轨迹上铺，不会过多关注物体交互之类的信息，像具身video这种经常有一个机械臂和其他从物体交互的场景，容易造成局部失真和特征重叠。针对这个问题文章提了个方法：将具身操作分为三个阶段，操作物体有主物体（机械臂等）和从物体（被抓取的物体），三个阶段分别重点关注不同物体的轨迹变化与形状，就能比较好地处理操作过程中不同物体轨迹交互的问题。
+
+文章将过程分成三个阶段：交互前，交互中，和交互后。在开始之前将视频的初始帧送入3D-VAE，压缩成隐空间表示，然后用掩码显示出视频帧中主物体和从物体的位置，再用归一化向量填充掩码部分，向量计算和填充的方式：
+
+$$
+\begin{align*}
+\tilde{v}_{d,s}[i] &= \frac{1}{\sum_{i=1}^h \sum_{j=1}^w m_{d,s}[i,j]} \sum_{i=1}^h \sum_{j=1}^w \tilde{z}_{d,s}[i,x,y] \quad \text{for } i = 0,1,\ldots,c \\
+\tilde{z}_{d,s}[i,x,y] &= 
+\begin{cases}
+z[i,x,y] & \text{if } m_{d,s}[x,y] = 1 \\
+0 & \text{otherwise}
+\end{cases} \quad \text{(3)}
+\end{align*}
+$$
+
+本质就是算掩码部分均值然后盖上，其他部分填0。接着在运动轨迹三个阶段为：
+
+$$p_\theta(x | I, c, C_s, C_d) = p_\theta(x_1 | I, c, v_d, C_1) \times p_\theta(x_2 | I, c, v_d, v_s, C_1, C_2) \times p_\theta(x_3 | I, c, v_d, v_s, C_1, C_2, C_3)$$
+
+在不同阶段主要关注不同物体的轨迹，就能得到一个unify的轨迹建模，而不是像原来一样大家的边际特征和轨迹揉在一起。文章中的动作注入模块也值得关注。
+
+[arxiv](http://export.arxiv.org/abs/2506.01943)
