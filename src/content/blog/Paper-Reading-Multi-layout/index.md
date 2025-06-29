@@ -3,7 +3,7 @@ title: Paper Reading--Multi-layout image generation and editing
 publishDate: 2025-06-29
 description: '多图层编辑'
 tags:
-  - Life
+  - 2D Generation
 heroImage: { src: 'thundermail.webp', color: '#64574D' }
 language: 'Chinese'
 ---
