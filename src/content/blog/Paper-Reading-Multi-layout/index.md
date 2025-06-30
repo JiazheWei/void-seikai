@@ -15,7 +15,7 @@ language: 'Chinese'
 
 - 人工打分。
 
-## CreatiPoster: Towards Editable and Controllable Multi-Layer Graphic Design Generation
+## CreatiPoster
 
 图形设计的几个要求：
 - 文本准确性。
@@ -44,3 +44,5 @@ JSON协议 → Skia等渲染引擎 → 完全可编辑的前景图层
 [arxiv](https://arxiv.org/abs/2506.10890#:~:text=In%20this%20paper%2C%20we%20introduce%20CreatiPoster%2C%20a%20framework,multi-layer%20compositions%20from%20optional%20natural-language%20instructions%20or%20assets.)
 
 
+
+## CreatiDesign
