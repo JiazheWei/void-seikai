@@ -43,3 +43,12 @@ targets_selected = targets[mask]
 ## np.unique()
 
 `unique`函数找出数组中不重复的元素有哪些，返回一个数组。
+
+## 关于赋值
+
+使用一个数组的值赋给另一个数组时，要使用`copy`函数。否则python只是创建了指向同一个对象的指针。
+
+```python
+A = C.copy()
+B = C.copy()
+```
