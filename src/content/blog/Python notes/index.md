@@ -52,3 +52,21 @@ targets_selected = targets[mask]
 A = C.copy()
 B = C.copy()
 ```
+
+## Counter
+`Counter`是python 提供了可以计数元组中元素出现次数的库。`Counter`的返回是：
+
+```
+[{label, 出现次数}]
+```
+例如针对data:
+
+```
+[1,1,4,5,1,4]
+```
+这个数组，`Counter(data)`返回：
+
+```
+[{1,3},{4,2},{5,1}]
+```
+Counter提供`most_common(k)`方法提取出出现次数最多的前k个元组。通过`Counter(data).most_common(1)[0][0]`就可以得到出现次数最多的标签是什么。
