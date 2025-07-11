@@ -25,7 +25,7 @@ language: 'Chinese'
 
 回复信的模板：
 
-```
+```latex
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{graphicx} % Required for inserting images
