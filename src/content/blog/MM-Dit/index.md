@@ -67,3 +67,34 @@ loss.backward()  # 梯度传播到所有参数
 ```
 
 ## Dit
+把DDPM的U-net结构换成了VIT组件。整体过程：
+
+```
+预训练 VAE：E（编码）、D（解码）。
+
+Patchify + 位置编码：将 z_t→token 序列。
+
+条件嵌入：t、c→d 维条件向量。
+
+Transformer 主干：N 层 ViT-style block（推荐 adaLN-Zero 版）。
+
+线性解码器：token→重排为拼接的噪声与对角协方差通道
+```
+
+将时间步与类别等嵌入的方法和Vit嵌入cls token的方法类似，最初随机化一个维度相同的token，跟patchify之后的image embedding放一起过Vit blocks。经过encoder编码之后的token是高维度特征，通过decoder的单线性层（可训练）将token从 $T \times d$ 转回 $p \times p \times c$的形状，再线性解码得到预测的噪声和对角协方差。
+
+
+![alt text](Dit.png)
+### Trainging
+
+- 现有的image，采样时间步，采样噪声
+- image，时间步，噪声送入scheduler得到对应去噪步骤下的latent image
+- latent image送入Dit的encoder，decoder预测到噪声
+- 预测噪声与实际噪声做损失计算并反向传播
+
+### Inference
+
+- 得到条件嵌入，采样纯噪声分布，并指定时间步数
+- 过encoder，decoder迭代去噪得到最终图像
+
+  
