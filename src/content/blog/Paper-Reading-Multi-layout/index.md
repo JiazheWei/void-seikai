@@ -118,3 +118,4 @@ Pipeline
 4. 用Grounding DINO得到每个实体的bounding box
 5. 用MiniCPM-V-2.6视觉语言模型，结合原图像，bounding box和每个实体的文本描述重新给出对每个视觉元素的描述
 
+## 
