@@ -34,30 +34,30 @@ DPO相比于PPO直接优化是不需要采样步骤。
 
 前文提到的RLHF的优化目标的最优解可以显式解出来：
 
-\[ \pi^*(y|x) = \frac{1}{Z(x)} \pi_{ref}(y|x) \exp \left( \frac{1}{\beta} r(x,y) \right) \]
+$$[ \pi^*(y|x) = \frac{1}{Z(x)} \pi_{ref}(y|x) \exp \left( \frac{1}{\beta} r(x,y) \right) ]$$
 
 其中$Z(x)$是归一化常数：
 
-\[ Z(x) = \sum_y \pi_{ref}(y|x) \exp \left( \frac{1}{\beta} r(x,y) \right) \]
+ $$Z(x) = \sum_y \pi_{ref}(y|x) \exp \left( \frac{1}{\beta} r(x,y) \right)$$ 
 
 可以认为最优策略是参考策略的加权表示，而这个权重由奖励模型决定。
 
 奖励函数可以被解出来：
 
-\[ r(x,y) = \beta \log \frac{\pi^*(y|x)}{\pi_{ref}(y|x)} + \beta \log Z(x). \]
+$$r(x,y) = \beta \log \frac{\pi^*(y|x)}{\pi_{ref}(y|x)} + \beta \log Z(x). $$
 
 这里，奖励被分解为两部分：第一项捕捉策略相对于参考的偏好，第二项是归一化偏移。接下来，在DPO中采用Bradley-Terry偏好模型建模人类偏好，对于给定prompt $x$，偏好响应优于劣等响应的概率为：
 
-\[ P(y_w > y_l | x) = \sigma \left( r(x, y_w) - r(x, y_l) \right) \]
+$$P(y_w > y_l | x) = \sigma \left( r(x, y_w) - r(x, y_l) \right) $$
 
 $\sigma$是simoid函数。
 带入上面显式求解的奖励：
 
-\[ P(y_w > y_l | x) = \sigma \left( \beta \log \frac{\pi^*(y_w | x)}{\pi_{ref}(y_w | x)} - \beta \log \frac{\pi^*(y_l | x)}{\pi_{ref}(y_l | x)} \right) \]
+$$ P(y_w > y_l | x) = \sigma \left( \beta \log \frac{\pi^*(y_w | x)}{\pi_{ref}(y_w | x)} - \beta \log \frac{\pi^*(y_l | x)}{\pi_{ref}(y_l | x)} \right) $$
 
 我们可以发现DPO消除了对reward model的依赖，因为$r(x,y)$被策略$\pi(.)$表示出来了。也可以发现DPO摆脱了对RL那一套范式的依赖，现在可以直接在偏好数据上进行最大化似然训练，而不需要采样和梯度策略。
 
 基于上述偏好概率，DPO 的损失函数设计为一个负对数似然损失，类似于二元交叉熵分类任务：目标是最大化模型预测的偏好概率与人类偏好数据的匹配度。具体公式为：
 
-\[ L_{\text{DPO}}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}_{(x,y_w,y_l) \sim D} \left[ \log \sigma \left( \beta \log \frac{\pi_\theta(y_w | x)}{\pi_{\text{ref}}(y_w | x)} - \beta \log \frac{\pi_\theta(y_l | x)}{\pi_{\text{ref}}(y_l | x)} \right) \right] \]
+$$L_{\text{DPO}}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}_{(x,y_w,y_l) \sim D} \left[ \log \sigma \left( \beta \log \frac{\pi_\theta(y_w | x)}{\pi_{\text{ref}}(y_w | x)} - \beta \log \frac{\pi_\theta(y_l | x)}{\pi_{\text{ref}}(y_l | x)} \right) \right] $$
 
